@@ -7,7 +7,7 @@ import { intro, outro, select, cancel, isCancel, spinner } from '@clack/prompts'
 import pc from 'picocolors';
 
 const SOURCE_URL =
-  'https://raw.githubusercontent.com/luiscrsilveira/coding-agent-guidelines/main/CLAUDE.md';
+  'https://raw.githubusercontent.com/luiscrsilveira/coding-agent-guidelines/master/CLAUDE.md';
 
 const TARGETS = {
   claude: {
