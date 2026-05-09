@@ -10,7 +10,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@clack/prompts": "^0.9.0"
+    "@clack/prompts": "^0.9.0",
+    "picocolors": "^1.0.0"
   },
   "keywords": ["claude", "llm", "coding-guidelines", "ai-agent"],
   "license": "MIT"

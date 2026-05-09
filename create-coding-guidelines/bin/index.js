@@ -94,7 +94,7 @@ async function main() {
   } catch (err) {
     spin.stop('Fetch failed.');
     console.error(pc.red(`Error: ${err.message}`));
-    console.error(pc.dim(`Manual install: curl -o <target> ${SOURCE_URL}`));
+    console.error(pc.dim(`Manual install: curl -o ${targetPath} ${SOURCE_URL}`));
     process.exit(1);
   }
 
@@ -110,4 +110,7 @@ async function main() {
   outro(pc.green(`✓ Guidelines installed → ${pc.bold(targetPath)}`));
 }
 
-main();
+main().catch((err) => {
+  console.error(pc.red(`Unexpected error: ${err.message}`));
+  process.exit(1);
+});
