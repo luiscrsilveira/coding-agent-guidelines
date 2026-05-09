@@ -1,6 +1,6 @@
 {
   "name": "llm-rigor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Install LLM coding guidelines for Claude, Antigravity, or Opencode",
   "bin": {
     "llm-rigor": "bin/index.js"

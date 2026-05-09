@@ -7,22 +7,25 @@ import { intro, outro, select, cancel, isCancel, spinner } from '@clack/prompts'
 import pc from 'picocolors';
 
 const SOURCE_URL =
-  'https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/CLAUDE.md';
+  'https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/RULES.md';
 
 const TARGETS = {
-  claude: {
-    project: () => path.resolve(process.cwd(), 'CLAUDE.md'),
-    global: () => path.join(os.homedir(), '.claude', 'CLAUDE.md'),
-  },
-  antigravity: {
-    project: () => path.resolve(process.cwd(), '.agent', 'rules', 'coding-guidelines.md'),
-  },
-  opencode: {
-    project: () => path.resolve(process.cwd(), '.opencode', 'instructions', 'coding-guidelines.md'),
-  },
+  claude:      { project: () => path.resolve(process.cwd(), 'CLAUDE.md'),
+                 global:  () => path.join(os.homedir(), '.claude', 'CLAUDE.md') },
+  codex:       { project: () => path.resolve(process.cwd(), 'AGENTS.md') },
+  cursor:      { project: () => path.resolve(process.cwd(), '.cursorrules') },
+  gemini:      { project: () => path.resolve(process.cwd(), 'GEMINI.md') },
+  windsurf:    { project: () => path.resolve(process.cwd(), '.windsurfrules') },
+  antigravity: { project: () => path.resolve(process.cwd(), 'AGENTS.md') },
+  opencode:    { project: () => path.resolve(process.cwd(), 'AGENTS.md') },
+  cline:       { project: () => path.resolve(process.cwd(), '.clinerules') },
+  roo:         { project: () => path.resolve(process.cwd(), '.roorules') },
+  copilot:     { project: () => path.resolve(process.cwd(), '.github', 'copilot-instructions.md') },
+  aider:       { project: () => path.resolve(process.cwd(), 'CONVENTIONS.md') },
+  amazonq:     { project: () => path.resolve(process.cwd(), '.amazonq', 'rules', 'llm-rigor.md') },
 };
 
-const SEPARATOR = '\n\n<!-- coding-guidelines: appended by create-coding-guidelines -->\n';
+const SEPARATOR = '\n\n<!-- llm-rigor: appended by llm-rigor -->\n';
 
 function fetchGuidelines() {
   return new Promise((resolve, reject) => {
@@ -52,14 +55,23 @@ function writeGuidelines(targetPath, content) {
 }
 
 async function main() {
-  intro(pc.bgCyan(pc.black(' create-coding-guidelines ')));
+  intro(pc.bgCyan(pc.black(' llm-rigor ')));
 
   const agent = await select({
     message: 'Which coding agent?',
     options: [
-      { value: 'claude', label: 'Claude Code', hint: 'CLAUDE.md' },
-      { value: 'antigravity', label: 'Antigravity', hint: '.agent/rules/' },
-      { value: 'opencode', label: 'Opencode', hint: '.opencode/instructions/' },
+      { value: 'claude',      label: 'Claude Code',        hint: 'CLAUDE.md' },
+      { value: 'codex',       label: 'Codex',              hint: 'AGENTS.md' },
+      { value: 'cursor',      label: 'Cursor',             hint: '.cursorrules' },
+      { value: 'gemini',      label: 'Gemini CLI',         hint: 'GEMINI.md' },
+      { value: 'windsurf',    label: 'Windsurf',           hint: '.windsurfrules' },
+      { value: 'antigravity', label: 'Antigravity',        hint: 'AGENTS.md' },
+      { value: 'opencode',    label: 'Opencode',           hint: 'AGENTS.md' },
+      { value: 'cline',       label: 'Cline',              hint: '.clinerules' },
+      { value: 'roo',         label: 'Roo Code',           hint: '.roorules' },
+      { value: 'copilot',     label: 'GitHub Copilot',     hint: '.github/copilot-instructions.md' },
+      { value: 'aider',       label: 'Aider',              hint: 'CONVENTIONS.md' },
+      { value: 'amazonq',     label: 'Amazon Q Developer', hint: '.amazonq/rules/llm-rigor.md' },
     ],
   });
 
@@ -74,7 +86,7 @@ async function main() {
       message: 'Install scope?',
       options: [
         { value: 'project', label: 'Project', hint: './CLAUDE.md' },
-        { value: 'global', label: 'Global', hint: '~/.claude/CLAUDE.md' },
+        { value: 'global',  label: 'Global',  hint: '~/.claude/CLAUDE.md' },
       ],
     });
 
