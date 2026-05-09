@@ -1,8 +1,26 @@
 #!/usr/bin/env node
 import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
 const SOURCE_URL =
   'https://raw.githubusercontent.com/luiscrsilveira/coding-agent-guidelines/main/CLAUDE.md';
+
+const TARGETS = {
+  claude: {
+    project: () => path.resolve(process.cwd(), 'CLAUDE.md'),
+    global: () => path.join(os.homedir(), '.claude', 'CLAUDE.md'),
+  },
+  antigravity: {
+    project: () => path.resolve(process.cwd(), '.agent', 'rules', 'coding-guidelines.md'),
+  },
+  opencode: {
+    project: () => path.resolve(process.cwd(), '.opencode', 'instructions', 'coding-guidelines.md'),
+  },
+};
+
+const SEPARATOR = '\n\n<!-- coding-guidelines: appended by create-coding-guidelines -->\n';
 
 function fetchGuidelines() {
   return new Promise((resolve, reject) => {
@@ -20,10 +38,11 @@ function fetchGuidelines() {
   });
 }
 
-// Smoke test — remove after Task 3
-fetchGuidelines().then((content) => {
-  console.log('Fetched OK, length:', content.length);
-}).catch((err) => {
-  console.error('Fetch failed:', err.message);
-  process.exit(1);
-});
+function writeGuidelines(targetPath, content) {
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  if (fs.existsSync(targetPath)) {
+    fs.appendFileSync(targetPath, SEPARATOR + content, 'utf8');
+  } else {
+    fs.writeFileSync(targetPath, content, 'utf8');
+  }
+}
