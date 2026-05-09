@@ -207,26 +207,32 @@ For multi-step tasks, state a brief plan with verifications:
 
 ## Install
 
-### Option A: Per-project (recommended)
+### Option A: Interactive CLI (recommended)
 
-Replace `<your-username>` below with your GitHub username (or the username of whoever forked this repo).
+```bash
+npx llm-rigor
+```
+
+Prompts for agent (Claude Code, Antigravity, Opencode) and scope (project or global), then fetches and installs the guidelines automatically.
+
+### Option B: curl
 
 New project:
 ```bash
-curl -o CLAUDE.md https://raw.githubusercontent.com/<your-username>/llm-coding-guidelines/main/CLAUDE.md
+curl -o CLAUDE.md https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/CLAUDE.md
 ```
 
 Append to existing CLAUDE.md:
 ```bash
 echo "" >> CLAUDE.md
-curl https://raw.githubusercontent.com/<your-username>/llm-coding-guidelines/main/CLAUDE.md >> CLAUDE.md
+curl https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/CLAUDE.md >> CLAUDE.md
 ```
 
-### Option B: Global (across all projects)
+### Option C: Global (across all projects)
 
 Place the file at `~/.claude/CLAUDE.md` to apply to every Claude Code session.
 
-### Option C: Cursor / other tools
+### Option D: Cursor / other tools
 
 The same file works as a Cursor project rule. Save it at `.cursor/rules/coding-guidelines.mdc` in your project root.
 
