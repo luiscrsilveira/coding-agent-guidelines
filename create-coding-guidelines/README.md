@@ -21,7 +21,7 @@ Interactive prompts will ask:
 | Antigravity | project | `.agent/rules/coding-guidelines.md` |
 | Opencode | project | `.opencode/instructions/coding-guidelines.md` |
 
-If the target file already exists, the guidelines are **appended** (not overwritten).
+If the target file already exists, the guidelines are **appended** (not overwritten). To update to a newer version, delete the target file first, then re-run.
 
 ## Requirements
 

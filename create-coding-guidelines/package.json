@@ -13,6 +13,7 @@
     "@clack/prompts": "^0.9.0",
     "picocolors": "^1.0.0"
   },
+  "files": ["bin", "README.md"],
   "keywords": ["claude", "llm", "coding-guidelines", "ai-agent"],
   "license": "MIT"
 }

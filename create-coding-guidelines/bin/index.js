@@ -26,7 +26,7 @@ const SEPARATOR = '\n\n<!-- coding-guidelines: appended by create-coding-guideli
 
 function fetchGuidelines() {
   return new Promise((resolve, reject) => {
-    https.get(SOURCE_URL, (res) => {
+    const req = https.get(SOURCE_URL, (res) => {
       if (res.statusCode !== 200) {
         reject(new Error(`HTTP ${res.statusCode} fetching guidelines`));
         res.resume();
@@ -36,7 +36,9 @@ function fetchGuidelines() {
       res.on('error', reject);
       res.on('data', (chunk) => chunks.push(chunk));
       res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
-    }).on('error', reject);
+    });
+    req.setTimeout(10000, () => req.destroy(new Error('Request timed out after 10s')));
+    req.on('error', reject);
   });
 }
 
