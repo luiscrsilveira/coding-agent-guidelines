@@ -1,6 +1,6 @@
 {
   "name": "create-coding-guidelines",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Install LLM coding guidelines for Claude, Antigravity, or Opencode",
   "bin": {
     "create-coding-guidelines": "bin/index.js"
@@ -13,7 +13,15 @@
     "@clack/prompts": "^0.9.0",
     "picocolors": "^1.0.0"
   },
-  "files": ["bin", "README.md"],
-  "keywords": ["claude", "llm", "coding-guidelines", "ai-agent"],
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "keywords": [
+    "claude",
+    "llm",
+    "coding-guidelines",
+    "ai-agent"
+  ],
   "license": "MIT"
 }
