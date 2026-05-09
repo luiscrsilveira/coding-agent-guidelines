@@ -3,6 +3,8 @@ import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import { intro, outro, select, cancel, isCancel, spinner } from '@clack/prompts';
+import pc from 'picocolors';
 
 const SOURCE_URL =
   'https://raw.githubusercontent.com/luiscrsilveira/coding-agent-guidelines/main/CLAUDE.md';
@@ -46,3 +48,66 @@ function writeGuidelines(targetPath, content) {
     fs.writeFileSync(targetPath, content, 'utf8');
   }
 }
+
+async function main() {
+  intro(pc.bgCyan(pc.black(' create-coding-guidelines ')));
+
+  const agent = await select({
+    message: 'Which coding agent?',
+    options: [
+      { value: 'claude', label: 'Claude Code', hint: 'CLAUDE.md' },
+      { value: 'antigravity', label: 'Antigravity', hint: '.agent/rules/' },
+      { value: 'opencode', label: 'Opencode', hint: '.opencode/instructions/' },
+    ],
+  });
+
+  if (isCancel(agent)) {
+    cancel('Cancelled.');
+    process.exit(0);
+  }
+
+  let scope = 'project';
+  if (agent === 'claude') {
+    const scopeAnswer = await select({
+      message: 'Install scope?',
+      options: [
+        { value: 'project', label: 'Project', hint: './CLAUDE.md' },
+        { value: 'global', label: 'Global', hint: '~/.claude/CLAUDE.md' },
+      ],
+    });
+
+    if (isCancel(scopeAnswer)) {
+      cancel('Cancelled.');
+      process.exit(0);
+    }
+    scope = scopeAnswer;
+  }
+
+  const targetPath = TARGETS[agent][scope]();
+
+  const spin = spinner();
+  spin.start('Fetching guidelines from GitHub...');
+
+  let content;
+  try {
+    content = await fetchGuidelines();
+  } catch (err) {
+    spin.stop('Fetch failed.');
+    console.error(pc.red(`Error: ${err.message}`));
+    console.error(pc.dim(`Manual install: curl -o <target> ${SOURCE_URL}`));
+    process.exit(1);
+  }
+
+  spin.stop('Guidelines fetched.');
+
+  try {
+    writeGuidelines(targetPath, content);
+  } catch (err) {
+    console.error(pc.red(`Write failed: ${err.message}`));
+    process.exit(1);
+  }
+
+  outro(pc.green(`✓ Guidelines installed → ${pc.bold(targetPath)}`));
+}
+
+main();
