@@ -1,6 +1,8 @@
-# LLM Coding Guidelines
+# llm-rigor
 
-A single `CLAUDE.md` file to make LLM coding assistants (Claude Code, Cursor, etc.) behave with more rigor and less agreeableness — built on top of [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls and Forrest Chang's [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills), with additional guidelines for tone calibration, sycophancy avoidance, and answer-first communication.
+A single `RULES.md` file — installed as the correct config file for your coding agent — to make LLM coding assistants behave with more rigor and less agreeableness. Built on top of [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls and Forrest Chang's [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills), with additional guidelines for tone calibration, sycophancy avoidance, and answer-first communication.
+
+**Supported agents:** Claude Code, Codex, Cursor, Gemini CLI, Windsurf, Antigravity, Opencode, Cline, Roo Code, GitHub Copilot, Aider, Amazon Q Developer.
 
 ## The Problems
 
@@ -213,28 +215,32 @@ For multi-step tasks, state a brief plan with verifications:
 npx llm-rigor
 ```
 
-Prompts for agent (Claude Code, Antigravity, Opencode) and scope (project or global), then fetches and installs the guidelines automatically.
+Prompts for agent and scope (project or global for Claude Code), then fetches and installs to the correct file automatically.
+
+| Agent | File installed |
+|-------|---------------|
+| Claude Code | `CLAUDE.md` (or `~/.claude/CLAUDE.md` for global) |
+| Codex / Antigravity / Opencode | `AGENTS.md` |
+| Cursor | `.cursorrules` |
+| Gemini CLI | `GEMINI.md` |
+| Windsurf | `.windsurfrules` |
+| Cline | `.clinerules` |
+| Roo Code | `.roorules` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+| Aider | `CONVENTIONS.md` |
+| Amazon Q Developer | `.amazonq/rules/llm-rigor.md` |
 
 ### Option B: curl
 
-New project:
 ```bash
-curl -o CLAUDE.md https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/CLAUDE.md
+curl -o RULES.md https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/RULES.md
 ```
 
-Append to existing CLAUDE.md:
-```bash
-echo "" >> CLAUDE.md
-curl https://raw.githubusercontent.com/luiscrsilveira/llm-rigor/master/CLAUDE.md >> CLAUDE.md
-```
+Then rename/move to the path your agent expects (see table above).
 
-### Option C: Global (across all projects)
+### Option C: Global Claude Code
 
-Place the file at `~/.claude/CLAUDE.md` to apply to every Claude Code session.
-
-### Option D: Cursor / other tools
-
-The same file works as a Cursor project rule. Save it at `.cursor/rules/coding-guidelines.mdc` in your project root.
+Place at `~/.claude/CLAUDE.md` to apply to every Claude Code session.
 
 ## Customization
 
@@ -270,7 +276,7 @@ These guidelines are working when you see:
 
 Built on:
 - [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876)
-- [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) — the original CLAUDE.md distillation of Karpathy's principles
+- [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) — the original RULES.md distillation of Karpathy's principles
 
 This repo extends that work with three additional principles (pushback calibration, answer-first communication, explicit uncertainty) addressing tone and sycophancy alongside the original four coding principles.
 
