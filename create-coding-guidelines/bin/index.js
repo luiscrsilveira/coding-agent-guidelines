@@ -13,6 +13,7 @@ function fetchGuidelines() {
         return;
       }
       const chunks = [];
+      res.on('error', reject);
       res.on('data', (chunk) => chunks.push(chunk));
       res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
     }).on('error', reject);
