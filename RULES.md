@@ -1,4 +1,4 @@
-# CLAUDE.md
+# LLM Coding Guidelines
 
 Behavioral guidelines to reduce common LLM coding mistakes. Rigor over agreeableness. When these conflict with being helpful or pleasant, follow these. Merge with project-specific instructions as needed.
 
